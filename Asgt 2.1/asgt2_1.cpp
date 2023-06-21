@@ -6,7 +6,7 @@ void selectionSort(int array[], int& length) {
     int swapTemp = 0;
     for (int i = 0; i <= length-2; i++) {
         maxIndex = i;
-        for (int j = i+1; j <= length-i; j++) {
+        for (int j = i; j <= length-i; j++) {
             if (array[j] > array[maxIndex]) {
                 maxIndex = j;
             }
