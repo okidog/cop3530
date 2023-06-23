@@ -44,7 +44,7 @@ int main() {
     int k = 0;
     int n = 0;
     int K[99] = {0};
-    cout << "This program calculates a^k mod n." << endl;
+    cout << "This program calculates a^k mod n. " << endl;
     readVariables(a, k, n);
     binaryK(k, K);
     cout << "Result: " << modularExpo(a, K, n) << endl;
