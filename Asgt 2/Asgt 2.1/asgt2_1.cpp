@@ -4,9 +4,9 @@ using namespace std;
 void selectionSort(int array[], int& length) {
     int maxIndex = 0;
     int swapTemp = 0;
-    for (int i = 0; i <= length-2; i++) {
+    for (int i = 0; i <= length; i++) {
         maxIndex = i;
-        for (int j = i; j <= length-i; j++) {
+        for (int j = i; j <= length; j++) {
             if (array[j] > array[maxIndex]) {
                 maxIndex = j;
             }
