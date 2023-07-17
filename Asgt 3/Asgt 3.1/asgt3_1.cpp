@@ -3,33 +3,50 @@ using namespace std;
 
 class Node {
 public:
-    int value;
+    char value;
     Node* next;
-    Node(int newValue) {
-        value = newValue;
-        next = nullptr;
-    }
 };
 
-void printList(Node head) {
-    Node currentNode = head;
-    while (currentNode.next != nullptr) {
-        cout << currentNode.value << endl;
-        currentNode = currentNode.next;
+Node* start = nullptr;
+
+Node* getNode() {
+    Node* newnode;
+    newnode= (Node*)malloc(sizeof(Node));
+    cout << "Enter data (type int):" << endl;
+    cin >> &newnode->value;
+    return newnode;
+}
+
+void createList(int n) {
+    Node* newNode;
+    Node* temp;
+    for (int i = 0; i < n; i++) {
+        newNode = getNode();
+        if(start == nullptr) {
+            start = newNode;
+        } else {
+            temp = start;
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+}
+
+void insertBeg() {
+    Node* newNode;
+    newNode = getNode();
+    if (start == nullptr) {
+        start = newNode;
+    } else {
+        newNode->next = start;
+        start = newNode;
     }
 }
 
 int main() {
-    Node node1 = 1;
-    Node node2 = 2;
-    Node node3 = 3;
-    Node node4 = 4;
+    Node* start = nullptr;
 
-    node1.next = &node2;
-    node2.next = &node3;
-    node3.next = &node4;
-    node4.next = nullptr;
-
-    printList(node1);
     return 0;
 }
