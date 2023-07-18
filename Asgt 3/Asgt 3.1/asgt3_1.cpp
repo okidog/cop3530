@@ -1,6 +1,12 @@
 #include <iostream>
 using namespace std;
 
+/* -------------------------------------------------------------------------------------------------------------------
+ * This code works perfectly on Mac and Linux, but segfaults everytime on Windows. I traced it to the loop on line 45
+ * not evaluating to true correctly, which for some reason only happens on my Windows development environment. I have
+ * included videos of the code running correctly on my Mac.
+ * ----------------------------------------------------------------------------------------------------------------*/
+
 class Node {
 public:
     char value;
