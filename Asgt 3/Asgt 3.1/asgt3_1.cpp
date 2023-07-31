@@ -117,6 +117,5 @@ int main() {
     insertMid();
     printList(start);
 
-
     return 0;
 }
