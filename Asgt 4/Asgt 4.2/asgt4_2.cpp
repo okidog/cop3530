@@ -3,24 +3,21 @@ using namespace std;
 
 class Node {
 public:
-    Node* prev;
+    Node* leftChild;
     char value;
-    Node* next;
+    Node* rightChild;
 };
 
 Node* start = nullptr; // Same initialization of start node used in 3.1
+
+// Used for creating of list. Letters are easier to read than numbers
+const char alphabet[26] {'A', 'B','C','D','E','F','G',};
+static int alphaPos = 0;
 
 // Init stack
 const int MAX = 10; // Max will not change in code, but can be changed for different implementations
 int stack[MAX];
 int top = 0;
-
-int menu() {
-    int choice;
-    cout << "1. Push\n2. Pop\n3. Display\n4. Quit" << endl;
-    cin >> choice;
-    return choice;
-}
 
 void display() {
     if (top == 0) {
@@ -36,7 +33,7 @@ void pop() {
     if (top == 0) {
         cout << "Stack empty, operation skipped" << endl;
     } else {
-        cout << stack[--top] << endl;
+        cout << stack[--top];
     }
 }
 
@@ -58,36 +55,36 @@ void push() {
 Node* getNode() {
     Node* newNode;
     newNode= (Node*)malloc(sizeof(Node));
-    cout << "Enter data (type char):" << endl;
-    cin >> &newNode->value;
-    newNode->prev = nullptr; // Same funct as 3.1, two lines added to init prev/next values to nullptr
-    newNode->next = nullptr;
+    newNode->value = alphabet[alphaPos];
+    newNode->leftChild = nullptr; // Same funct as 3.1, two lines added to init leftChild/rightChild values to nullptr
+    newNode->rightChild = nullptr;
     return newNode;
 }
 
-void createList(int n) {
+void createList(int depth) {
     Node* newNode;
     Node* temp;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < depth; i++) {
         newNode = getNode();
         if(start == nullptr) {
             start = newNode;
+            alphaPos++;
         } else {
             temp = start;
-            while (temp->next != nullptr) {
-                temp = temp->next;
+            while (temp->rightChild != nullptr) {
+                temp = temp->rightChild;
             }
-            temp->next = newNode;
-            newNode->prev = temp; // Only change to modify prev node
+            temp->rightChild = newNode;
+            newNode->leftChild = temp; // Only change to modify leftChild node
         }
     }
 }
 
 void printList(Node* start) { // Same funct as 3.1
     Node* currentNode = start;
-    while (currentNode != nullptr) { // Loop until next pointer is nullptr, signifying end
+    while (currentNode != nullptr) { // Loop until rightChild pointer is nullptr, signifying end
         cout << currentNode->value;
-        currentNode = currentNode->next;
+        currentNode = currentNode->rightChild;
     }
     cout << endl;
 }
