@@ -73,16 +73,14 @@ void createList(int depth) {
 
 void printList(Node* start) { // Same funct as 3.1
     Node* currentNode = start;
-    while (currentNode != nullptr) { // Loop until leftChild is nullptr, signifying end of tree depth-wise
+    if (currentNode == nullptr) {
+        cout << "The tree is empty!" << endl;
+    } else if (currentNode->leftChild != nullptr) {
         push(currentNode->value);
-        currentNode = currentNode->leftChild;
+        printList(currentNode);
+    } else { // currentNode->leftChild == nullptr, end of branch
+
     }
-    pop();
-    pop();
-    currentNode = start->leftChild->rightChild;
-    push(currentNode->value);
-    pop();
-    cout << endl;
 }
 
 
