@@ -25,7 +25,7 @@ Node* pop() {
         cout << "Stack empty, operation skipped" << endl;
     } else {
         cout << stack[--top]->value << ' ';
-        return stack[top]; // Return character for use in display funct
+        return stack[top]; // Return node for use in display funct
     }
 }
 
@@ -50,52 +50,22 @@ Node* getNode() { // 3.2 function, but instead of using user input, uses chars f
     return newNode;
 }
 
-/* Unused for now
-void createList(int depth) {
-    Node* newNode;
-    Node* temp;
-    for (int i = 0; i < depth; i++) {
-        newNode = getNode();
-        if(start == nullptr) {
-            start = newNode;
-        } else {
-            temp = start;
-            while (temp->rightChild != nullptr) {
-                temp = temp->rightChild;
-            }
-            temp->rightChild = newNode;
-            newNode->leftChild = temp; // Only change to modify leftChild node
-        }
-    }
-}
-*/
-
-void printList(Node* start) { // Loosely based on printList from 3.2
+void printList(Node* start) {
     Node* currentNode = start;
     if (currentNode == nullptr) {
         cout << "The tree is empty!" << endl;
+        return;
     } else {
-        while (currentNode->leftChild != nullptr){ //
-            push(currentNode);
-            currentNode = currentNode->leftChild;
-        };
         push(currentNode);
-        pop();
-        currentNode = pop(); // Pop twice and prepare for evaluation of right child
-        currentNode = currentNode->rightChild;
-        push(currentNode);
-        pop();
-        currentNode = pop(); // Back to root, now traverse right side
-        currentNode = currentNode->rightChild;
-        push(currentNode);
-        currentNode = currentNode->leftChild;
-        push(currentNode);
-        pop();
-        currentNode = pop();
-        currentNode = currentNode->rightChild;
-        push(currentNode);
-        pop();
-
+        if (currentNode->leftChild != nullptr) { // Find the deepest part of the tree while pushing currentNode
+            currentNode = currentNode->leftChild; // Only leftChild is evaulated since we are using a perfect tree
+            printList(currentNode);
+        } else {
+            pop(); // In the traversal diagram, stack is always popped twice
+            currentNode = pop();
+            currentNode = currentNode->rightChild; // Once the deepest part of the tree is reached, move to right children
+            printList(currentNode);
+        }
 
     }
 }
