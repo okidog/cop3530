@@ -23,6 +23,7 @@ int top = 0;
 Node* pop() {
     if (top == 0) {
         cout << "Stack empty, operation skipped" << endl;
+        return nullptr;
     } else {
         cout << stack[--top]->value << ' ';
         return stack[top]; // Return node for use in display funct
@@ -58,13 +59,15 @@ void printList(Node* start) {
     } else {
         push(currentNode);
         if (currentNode->leftChild != nullptr) { // Find the deepest part of the tree while pushing currentNode
-            currentNode = currentNode->leftChild; // Only leftChild is evaulated since we are using a perfect tree
+            currentNode = currentNode->leftChild; // Only leftChild is evaluated since we are using a perfect tree
             printList(currentNode);
         } else {
             pop(); // In the traversal diagram, stack is always popped twice
-            currentNode = pop();
-            currentNode = currentNode->rightChild; // Once the deepest part of the tree is reached, move to right children
-            printList(currentNode);
+            currentNode = pop();  // Once the deepest part of the tree is reached, move to right children
+            if (currentNode->rightChild != nullptr) {  // Check to make sure we aren't at far right end
+                currentNode = currentNode->rightChild;
+            }
+            printList(currentNode); // Run again for right side nodes
         }
 
     }
