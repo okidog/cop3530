@@ -16,27 +16,26 @@ static int alphaPos = 0;
 
 // Init stack
 const int MAX = 10; // Max will not change in code, but can be changed for different implementations
-int stack[MAX];
+Node* stack[MAX];
 int top = 0;
 
 // Same code from 4.1 with minor tweaks
-char pop() {
+Node* pop() {
     if (top == 0) {
         cout << "Stack empty, operation skipped" << endl;
     } else {
-        cout << stack[--top] << ' ';
+        cout << stack[--top]->value << ' ';
         return stack[top]; // Return character for use in display funct
     }
 }
 
-void push(char data) { // Now accepts input, removed user input
+void push(Node* data) { // Now accepts input, removed user input
     if (top == MAX) {
         cout << "Stack is full!" << endl;
         return;
     } else {
         stack[top] = data;
         ++top;
-        cout << "Data pushed successfully." << endl;
         return;
     }
 }
@@ -71,14 +70,32 @@ void createList(int depth) {
 }
 */
 
-void printList(Node* start) { // Same funct as 3.1
+void printList(Node* start) { // Loosely based on printList from 3.2
     Node* currentNode = start;
     if (currentNode == nullptr) {
         cout << "The tree is empty!" << endl;
-    } else if (currentNode->leftChild != nullptr) {
-        push(currentNode->value);
-        printList(currentNode);
-    } else { // currentNode->leftChild == nullptr, end of branch
+    } else {
+        while (currentNode->leftChild != nullptr){ //
+            push(currentNode);
+            currentNode = currentNode->leftChild;
+        };
+        push(currentNode);
+        pop();
+        currentNode = pop(); // Pop twice and prepare for evaluation of right child
+        currentNode = currentNode->rightChild;
+        push(currentNode);
+        pop();
+        currentNode = pop(); // Back to root, now traverse right side
+        currentNode = currentNode->rightChild;
+        push(currentNode);
+        currentNode = currentNode->leftChild;
+        push(currentNode);
+        pop();
+        currentNode = pop();
+        currentNode = currentNode->rightChild;
+        push(currentNode);
+        pop();
+
 
     }
 }
@@ -92,6 +109,8 @@ int main() {
     root->leftChild->rightChild = getNode();
     root->rightChild->leftChild = getNode();
     root->rightChild->rightChild = getNode();
+
+    printList(root);
 
     return 0;
 }
